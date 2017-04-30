@@ -19,7 +19,7 @@ module Vorax
       Dir["#{folder}/**/index.htm"].each do |index_file|
         File.open(index_file) do |file|
           doc = Nokogiri::HTML(file)
-          book = doc.at("meta[@name='doctitle']/@content").to_s
+          book = doc.at("meta[@name='dcterms.title']/@content").to_s
           book.gsub!(/^Oracle[^[:ascii:]] /, '')
           book.gsub!(nbsp, " ")
           unless book.empty?
