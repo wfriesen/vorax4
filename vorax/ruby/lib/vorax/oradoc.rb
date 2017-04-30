@@ -45,9 +45,9 @@ module Vorax
         VIM::command "redraw | echo vorax#utils#Throbber() . ' Searching... <q> to abort.'"
         return if Oradoc::abort?
         if book =~ /^#{filter}/ 
-          Dir[File.dirname(index_file) + "/**/*.htm"].each do |path|
+          Dir[File.dirname(index_file) + "/**/*.htm"].each_with_index do |path, i|
             File.open(path) do |file|
-              VIM::command "redraw | echo vorax#utils#Throbber() . ' Indexing: #{book[(0..30)].gsub(/'/,'''')}... <q> to abort.'"
+              VIM::command "redraw | echo vorax#utils#Throbber() . ' Indexing: #{path.gsub(/'/,'''')}... (#{i}/#{Dir[File.dirname(index_file) + "/**/*.htm"].length}) <q> to abort.'"
               return if Oradoc::abort?
               doc = Nokogiri::HTML(file)
               title = doc.at("head/title").content
